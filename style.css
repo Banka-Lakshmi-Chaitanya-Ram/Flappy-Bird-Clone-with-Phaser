@@ -1,0 +1,229 @@
+/* ==========================================================================
+   Flappy Bird - Clean Retro Arcade Theme & Responsive Viewport Engine
+   ========================================================================== */
+
+:root {
+  --bg-app: #0a0d14;
+  --bg-surface: #141923;
+  --bg-surface-hover: #1e2535;
+  --border-subtle: rgba(255, 255, 255, 0.12);
+  --border-focus: #f59e0b;
+  --text-primary: #f8fafc;
+  --text-muted: #64748b;
+  --accent-gold: #f59e0b;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
+/* Master Layout: Fits entire screen without scrolling */
+.game-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  padding: max(10px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+/* Header & Controls */
+.game-header {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 6px 4px;
+  flex-shrink: 0;
+}
+
+.game-title {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.95rem;
+  color: var(--accent-gold);
+  letter-spacing: -0.5px;
+  text-shadow: 2px 2px 0 #000000;
+  line-height: 1;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ctrl-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+  padding: 0;
+  touch-action: manipulation;
+}
+
+@media (hover: hover) {
+  .ctrl-btn:hover {
+    background-color: var(--bg-surface-hover);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+  }
+}
+
+.ctrl-btn:active {
+  transform: translateY(1px);
+  background-color: #0f131a;
+}
+
+.ctrl-btn:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.ctrl-btn .icon {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* Canvas Wrapper: Preserves 2:3 Portrait Aspect Ratio */
+.canvas-wrapper {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 0; /* Critical for flex child scaling */
+}
+
+.game-container {
+  height: min(calc(100dvh - 84px), calc((100vw - 24px) * 1.5), 620px);
+  width: auto;
+  aspect-ratio: 400 / 600;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  background-color: #4ec0ca;
+  position: relative;
+  touch-action: none;
+}
+
+/* Ensure Phaser Canvas fills container with pixel sharpness */
+.game-container canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  touch-action: none;
+}
+
+/* Footer Hint */
+.game-footer {
+  width: 100%;
+  text-align: center;
+  padding: 4px 0 2px 0;
+  flex-shrink: 0;
+}
+
+.desktop-hint {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.2px;
+}
+
+/* Touch Device Optimization: Hide desktop hint, enlarge touch targets */
+@media (pointer: coarse), (max-width: 480px) {
+  .desktop-hint {
+    display: none;
+  }
+
+  .game-app {
+    padding: max(6px, env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
+  }
+
+  .game-header {
+    padding: 2px 4px 4px 4px;
+  }
+
+  .ctrl-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .game-container {
+    height: min(calc(100dvh - 64px), calc((100vw - 16px) * 1.5), 620px);
+    border-radius: 8px;
+  }
+}
+
+/* Landscape Mode on Phones/Tablets */
+@media (orientation: landscape) and (max-height: 540px) {
+  .game-app {
+    flex-direction: row;
+    justify-content: center;
+    gap: 16px;
+    padding: 6px 16px;
+  }
+
+  .game-header {
+    width: auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+    padding: 0;
+  }
+
+  .header-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .game-title {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.75rem;
+  }
+
+  .game-container {
+    height: calc(100dvh - 16px);
+  }
+
+  .game-footer {
+    display: none;
+  }
+}

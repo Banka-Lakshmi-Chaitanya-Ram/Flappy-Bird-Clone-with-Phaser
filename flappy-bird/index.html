@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="description" content="A classic retro arcade Flappy Bird game built with Phaser 3." />
+  <meta name="theme-color" content="#0a0d14" />
+  <title>Flappy Bird</title>
+
+  <!-- Google Fonts: Authentic Arcade & Clean Modern Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Phaser 3 CDN with fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.55.2/phaser.min.js"></script>
+  <script>
+    if (typeof Phaser === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"><\/script>');
+    }
+  </script>
+</head>
+<body>
+  <div class="game-app">
+    <!-- Compact Top Arcade Toolbar -->
+    <header class="game-header">
+      <h1 class="game-title">FLAPPY BIRD</h1>
+      <div class="header-controls" aria-label="Game Controls">
+        <button id="btn-mute" class="ctrl-btn" type="button" title="Toggle Sound" aria-label="Toggle Sound">
+          <svg class="icon icon-sound-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="icon icon-sound-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+        <button id="btn-pause" class="ctrl-btn" type="button" title="Pause / Resume" aria-label="Pause Game">
+          <svg class="icon icon-pause" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="14" y="4" width="4" height="16" rx="1"></rect>
+          </svg>
+          <svg class="icon icon-play" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+          </svg>
+        </button>
+        <button id="btn-restart" class="ctrl-btn" type="button" title="Restart Game" aria-label="Restart Round">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Game Canvas Mount -->
+    <main class="canvas-wrapper">
+      <div id="game-container" class="game-container" aria-label="Flappy Bird Canvas"></div>
+    </main>
+
+    <!-- Desktop Minimalist Hint (Hidden on Touch Devices) -->
+    <footer class="game-footer">
+      <span class="desktop-hint">Space / Click to fly &bull; P to pause</span>
+    </footer>
+  </div>
+
+  <!-- Game Logic Script -->
+  <script src="app.js"></script>
+</body>
+</html>
